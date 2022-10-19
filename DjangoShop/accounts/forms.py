@@ -4,11 +4,13 @@ from .models import User
 
 
 class UserRegisterForm(forms.Form):
+    otp_choices = (('e', 'email'), ('p', 'phone'))
     email = forms.EmailField()
     full_name = forms.CharField(max_length=50)
     phone_number = forms.CharField(max_length=11)
     password1 = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(widget=forms.PasswordInput)
+    otp_way = forms.ChoiceField(choices=otp_choices)
 
     def clean_password2(self):
         cd = self.cleaned_data
