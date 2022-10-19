@@ -1,0 +1,33 @@
+from django import forms
+from django.core.exceptions import ValidationError
+from .models import User
+
+
+class UserRegisterForm(forms.Form):
+    email = forms.EmailField()
+    full_name = forms.CharField(max_length=50)
+    phone_number = forms.CharField(max_length=11)
+    password1 = forms.CharField(widget=forms.PasswordInput)
+    password2 = forms.CharField(widget=forms.PasswordInput)
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password1'] and cd['password2'] and cd['password1'] != cd['password2']:
+            raise ValidationError('passwords dont match')
+        return cd['password2']
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        user = User.objects.filter(email=email).exists()
+        if user:
+            raise ValidationError('this email already exist')
+        return email
+
+    def clean_phone(self):
+        phone = self.cleaned_data['phone_number']
+        user = User.objects.filter(phone_number=phone).exists()
+        if user:
+            raise ValidationError('this phone number is exist')
+        return phone
+
+
