@@ -6,10 +6,10 @@ from .models import User
 class UserRegisterForm(forms.Form):
     otp_choices = (('e', 'email'), ('p', 'phone'))
     email = forms.EmailField()
-    full_name = forms.CharField(max_length=50)
+    username = forms.CharField(max_length=50)
     phone_number = forms.CharField(max_length=11)
-    password1 = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(widget=forms.PasswordInput)
+    password1 = forms.CharField(widget=forms.PasswordInput, label='Password')
+    password2 = forms.CharField(widget=forms.PasswordInput, label='Confirm Password')
     otp_way = forms.ChoiceField(choices=otp_choices)
 
     def clean_password2(self):
@@ -32,4 +32,13 @@ class UserRegisterForm(forms.Form):
             raise ValidationError('this phone number is exist')
         return phone
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        user = User.objects.filter(username=username).exists()
+        if user:
+            raise ValidationError('this username is exist')
+        return username
 
+
+class VerifyCodeForm(forms.Form):
+    code = forms.IntegerField()
