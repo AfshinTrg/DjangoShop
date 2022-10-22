@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import UserRegisterForm, VerifyCodeForm
+from .forms import UserRegisterForm, VerifyCodeForm, UserLoginForm
 from django.contrib import messages
 import random
 from .utils import send_otp_code_phone, send_otp_code_email
@@ -68,4 +68,15 @@ class UserRegisterVerifyCodeView(View):
             messages.error(request, 'Your time expired, please try again', 'danger')
             return redirect('accounts:user_register')
 
+
+class UserLoginView(View):
+    form_class = UserLoginForm
+    template_name = 'accounts/Verify.html'
+
+    def get(self, request):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        pass
 
