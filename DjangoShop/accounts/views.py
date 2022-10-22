@@ -80,6 +80,10 @@ class UserLoginView(View):
     form_class = UserLoginForm
     template_name = 'accounts/Verify.html'
 
+    def setup(self, request, *args, **kwargs):
+        self.next = request.GET.get('next', None)  # for redirect user to stayed page
+        return super().setup(request, *args, **kwargs)
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             messages.warning(request, 'You Logged in ', 'warning')
@@ -98,6 +102,8 @@ class UserLoginView(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Logged in Successfully', 'success')
+                if self.next:
+                    return redirect(self.next)
                 return redirect('home:home')
             messages.error(request, 'Phone Number or Password is Wrong', 'danger')
             return render(request, self.template_name, {'form': form})
