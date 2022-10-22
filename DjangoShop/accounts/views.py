@@ -6,6 +6,7 @@ import random
 from .utils import send_otp_code_phone, send_otp_code_email
 from datetime import datetime, timedelta
 from .models import OtpCode, User
+from django.contrib.auth import authenticate, login
 
 
 class UserRegisterView(View):
@@ -78,5 +79,14 @@ class UserLoginView(View):
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        pass
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request, phone_number=cd['phone_number'], password=cd['password'])
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'Logged in Successfully', 'success')
+                return redirect('home:home')
+            messages.error(request, 'Phone Number or Password is Wrong', 'danger')
+            return render(request, self.template_name, {'form': form})
 
