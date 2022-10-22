@@ -6,7 +6,7 @@ import random
 from .utils import send_otp_code_phone, send_otp_code_email
 from datetime import datetime, timedelta
 from .models import OtpCode, User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 class UserRegisterView(View):
@@ -89,4 +89,12 @@ class UserLoginView(View):
                 return redirect('home:home')
             messages.error(request, 'Phone Number or Password is Wrong', 'danger')
             return render(request, self.template_name, {'form': form})
+
+
+class UserLogoutView(View):
+
+    def get(self, request):
+        logout(request)
+        messages.success(request, 'Logged out Successfully', 'success')
+        return redirect('home:home')
 
