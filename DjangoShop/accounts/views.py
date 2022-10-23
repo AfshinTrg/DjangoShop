@@ -7,6 +7,7 @@ from .utils import send_otp_code_phone, send_otp_code_email
 from datetime import datetime, timedelta
 from .models import OtpCode, User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class UserRegisterView(View):
@@ -109,7 +110,7 @@ class UserLoginView(View):
             return render(request, self.template_name, {'form': form})
 
 
-class UserLogoutView(View):
+class UserLogoutView(LoginRequiredMixin, View):
 
     def get(self, request):
         logout(request)
