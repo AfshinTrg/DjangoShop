@@ -37,6 +37,9 @@ class Cart:
             item['total_price'] = int(item['price']) * item['quantity']
             yield item
 
+    def __len__(self):
+        return len(self.cart.keys())
+
     def save(self):
         self.session.modified = True
 
