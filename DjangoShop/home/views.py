@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from .models import Category, Product
+from .forms import AddToCartForm
 
 
 class HomeView(View):
@@ -17,7 +18,8 @@ class HomeView(View):
 
 class ProductDetailView(View):
     template_name = 'home/detail.html'
+    form_class = AddToCartForm
 
     def get(self, request, product_slug):
         product = get_object_or_404(Product, slug=product_slug)
-        return render(request, self.template_name, {'product': product})
+        return render(request, self.template_name, {'product': product, 'form': self.form_class})
