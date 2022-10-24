@@ -18,7 +18,7 @@
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.price }}</td>
                 <td>{{ item.total_price }}</td>
-                <td><a href="#" class="btn btn-danger">Remove</a></td>
+                <td><a href="{% url 'orders:remove_cart' item.product.id %}" class="btn btn-danger">Remove</a></td>
               </tr>
           {% endfor %}
           </thead>

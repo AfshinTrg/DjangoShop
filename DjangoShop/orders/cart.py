@@ -18,6 +18,12 @@ class Cart:
         self.cart[product_id]['quantity'] += quantity
         self.save()
 
+    def remove(self, product_id):
+        p_id = str(product_id.id)
+        if p_id in self.cart:
+            del self.cart[p_id]
+        self.save()
+
     def __iter__(self):
         product_ids = self.cart.keys()
         products = Product.objects.filter(id__in=product_ids)
