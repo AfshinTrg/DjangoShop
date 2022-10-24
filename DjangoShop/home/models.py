@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -11,6 +12,9 @@ class Category(models.Model):
         if self.sub_category:
             return f'{self.sub_category}------->***{self.name}***'
         return f'{self.name}'
+
+    def get_absolute_url(self):
+        return reverse('home:category_filter', args=[self.slug])
 
 
 class Product(models.Model):
