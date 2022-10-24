@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %} {{ product.name }} detail{% endblock %}
+{% block content %}
+    <h2>{{ product.name }}</h2>
+    <small>{{ product.created }}</small>
+    <p>{{ product.price }}$</p>
+    <img src="https://via.placeholder.com/300" class="card-img-top" >
+    <p>{{ product.description }}</p><br/><br/>
+
+{% endblock %}
+
+
