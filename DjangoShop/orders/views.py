@@ -4,6 +4,9 @@ from .cart import Cart
 from home.models import Product
 from home.forms import AddToCartForm
 from .models import OrderItem, Order
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+
 
 
 class CartView(View):
@@ -33,7 +36,7 @@ class RemoveFromCartView(View):
         return redirect('orders:cart')
 
 
-class OrderCreateView(View):
+class OrderCreateView(LoginRequiredMixin, View):
     def get(self, request):
         cart = Cart(request)
         order = Order.objects.create(user=request.user)
@@ -44,10 +47,13 @@ class OrderCreateView(View):
         return redirect('orders:order_detail', order.id)
 
 
-class OrderDetailView(View):
+class OrderDetailView(LoginRequiredMixin, View):
     def get(self, request, order_id):
         order = get_object_or_404(Order, id=order_id)
-        return render(request, 'orders/order.html', {'order': order})
+        if order.user == request.user:
+            return render(request, 'orders/order.html', {'order': order})
+        messages.error(request, 'This is not your order, You can see only your orders', 'danger')
+        return redirect('home:home')
 
 
 
