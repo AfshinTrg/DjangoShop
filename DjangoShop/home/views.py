@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from .models import Category, Product
 from .forms import AddToCartForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class HomeView(View):
@@ -23,3 +24,8 @@ class ProductDetailView(View):
     def get(self, request, product_slug):
         product = get_object_or_404(Product, slug=product_slug)
         return render(request, self.template_name, {'product': product, 'form': self.form_class})
+
+
+class PanelView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'home/panel.html')
