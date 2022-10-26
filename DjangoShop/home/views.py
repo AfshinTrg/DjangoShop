@@ -1,7 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import Category, Product
-from .forms import AddToCartForm
+from .forms import AddToCartForm, AddCategoryForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from mixins import AdminRequiredMixin
 
@@ -38,3 +38,19 @@ class CategoriesListView(LoginRequiredMixin, AdminRequiredMixin, View):
     def get(self, request):
         categories = Category.objects.all()
         return render(request, self.template_name, {'categories': categories})
+
+
+class AddCategoryView(LoginRequiredMixin, AdminRequiredMixin, View):
+    template_name = 'home/add_category.html'
+    form_class = AddCategoryForm
+
+    def get(self, request):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home:Category_list')
+        return render(request, self.template_name, {'form': form})
