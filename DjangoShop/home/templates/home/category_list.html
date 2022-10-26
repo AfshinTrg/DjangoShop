@@ -1,0 +1,30 @@
+{% extends 'home/panel.html' %}
+{% block title %} Category List {% endblock %}
+{% block main %}
+ <table class="table table-dark">
+          <thead>
+             <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Main Category</th>
+                <th scope="col">Slug</th>
+                <th scope="col">Remove</th>
+              </tr>
+    {% for cat in categories %}
+         {% if not cat.is_sub%}
+             <tr class="table-secondary">
+         {% else %}
+             <tr>
+         {% endif %}
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ cat.name }}</td>
+            <td>{{ cat.sub_category }}</td>
+            <td>{{ cat.slug }}</td>
+            <td><a href="#" class="btn btn-danger">Remove</a></td>
+
+          </tr>
+
+   {% endfor %}
+                 </thead>
+</table>
+{% endblock %}

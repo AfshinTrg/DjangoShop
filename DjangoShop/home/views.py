@@ -3,6 +3,7 @@ from django.views import View
 from .models import Category, Product
 from .forms import AddToCartForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from mixins import AdminRequiredMixin
 
 
 class HomeView(View):
@@ -29,3 +30,11 @@ class ProductDetailView(View):
 class PanelView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'home/panel.html')
+
+
+class CategoriesListView(LoginRequiredMixin, AdminRequiredMixin, View):
+    template_name = 'home/category_list.html'
+
+    def get(self, request):
+        categories = Category.objects.all()
+        return render(request, self.template_name, {'categories': categories})
