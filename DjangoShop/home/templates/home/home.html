@@ -19,7 +19,7 @@
     </br></br>
     {% for product in products %}
         <div class="card" style="width: 18rem; display: inline-block">
-          <img src="https://via.placeholder.com/150" class="card-img-top" >
+                <img src="{{ product.image.url }}" alt="" style="width: 150px;height: 150px;">
           <div class="card-body">
             <a href="{{ product.get_absolute_url }}" class="card-title">{{ product.name }}</a>
           </div>
