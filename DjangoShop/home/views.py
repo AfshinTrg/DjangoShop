@@ -52,5 +52,15 @@ class AddCategoryView(LoginRequiredMixin, AdminRequiredMixin, View):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home:Category_list')
+            return redirect('home:category_list')
         return render(request, self.template_name, {'form': form})
+
+
+class ProductsListView(LoginRequiredMixin, AdminRequiredMixin, View):
+    template_name = 'home/products_list.html'
+
+    def get(self, request):
+        products = Product.objects.filter(available=True)
+        return render(request, self.template_name, {'products': products})
+
+

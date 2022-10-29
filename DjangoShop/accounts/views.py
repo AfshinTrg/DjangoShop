@@ -79,7 +79,7 @@ class UserRegisterVerifyCodeView(View):
 
 class UserLoginView(View):
     form_class = UserLoginForm
-    template_name = 'accounts/Verify.html'
+    template_name = 'accounts/login.html'
 
     def setup(self, request, *args, **kwargs):
         self.next = request.GET.get('next', None)  # for redirect user to stayed page
