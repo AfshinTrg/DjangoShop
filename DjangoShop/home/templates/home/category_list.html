@@ -8,6 +8,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Main Category</th>
                 <th scope="col">Slug</th>
+                <th scope="col">Update</th>
                 <th scope="col">Remove</th>
               </tr>
     {% for cat in categories %}
@@ -20,6 +21,7 @@
             <td>{{ cat.name }}</td>
             <td>{{ cat.sub_category }}</td>
             <td>{{ cat.slug }}</td>
+            <td><a href="{% url 'home:update_category' cat.id %}" class="btn btn-info">Update</a></td>
             <td><a href="{% url 'home:remove_category' cat.slug %}" class="btn btn-danger">Remove</a></td>
 
           </tr>

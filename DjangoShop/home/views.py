@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import Category, Product
-from .forms import AddToCartForm, AddCategoryForm, AddProductForm
+from .forms import AddToCartForm, AddCategoryForm, AddProductForm, UpdateCategoryForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from mixins import AdminRequiredMixin
 
@@ -60,6 +60,27 @@ class RemoveCategoryView(LoginRequiredMixin, AdminRequiredMixin, View):
     def get(self, request, category_slug):
         category = get_object_or_404(Category, slug=category_slug)
         category.delete()
+        return redirect('home:category_list')
+
+
+class UpdateCategoryView(LoginRequiredMixin, AdminRequiredMixin, View):
+    template_name = 'home/update_category.html'
+    form_class = UpdateCategoryForm
+
+    def setup(self, request, *args, **kwargs):
+        self.category_instance = get_object_or_404(Category, pk=kwargs['category_id'])
+        return super().setup(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        category = self.category_instance
+        form = self.form_class(instance=category)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        category = self.category_instance
+        form = self.form_class(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
         return redirect('home:category_list')
 
 

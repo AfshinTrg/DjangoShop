@@ -12,6 +12,13 @@ class AddCategoryForm(forms.ModelForm):
         exclude = ()
 
 
+class UpdateCategoryForm(forms.ModelForm):
+
+    class Meta:
+        model = Category
+        exclude = ('sub_category', 'is_sub')
+
+
 class AddProductForm(forms.ModelForm):
     class Meta:
         model = Product
