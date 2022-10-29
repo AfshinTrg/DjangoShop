@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import Category, Product
-from .forms import AddToCartForm, AddCategoryForm
+from .forms import AddToCartForm, AddCategoryForm, AddProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from mixins import AdminRequiredMixin
 
@@ -63,4 +63,19 @@ class ProductsListView(LoginRequiredMixin, AdminRequiredMixin, View):
         products = Product.objects.filter(available=True)
         return render(request, self.template_name, {'products': products})
 
+
+class AddProductView(LoginRequiredMixin, AdminRequiredMixin, View):
+    template_name = 'home/add_product.html'
+    form_class = AddProductForm
+
+    def get(self, request):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home:products_list')
+        return render(request, self.template_name, {'form': form})
 

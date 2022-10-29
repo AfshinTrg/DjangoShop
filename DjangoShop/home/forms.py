@@ -1,5 +1,5 @@
 from django import forms
-from .models import Category
+from .models import Category, Product
 
 
 class AddToCartForm(forms.Form):
@@ -9,4 +9,10 @@ class AddToCartForm(forms.Form):
 class AddCategoryForm(forms.ModelForm):
     class Meta:
         model = Category
+        exclude = ()
+
+
+class AddProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
         exclude = ()
