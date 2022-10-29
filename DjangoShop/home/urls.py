@@ -16,5 +16,6 @@ urlpatterns += [
     path('panel/category/remove/<slug:category_slug>/', views.RemoveCategoryView.as_view(), name='remove_category'),
     path('panel/products/', views.ProductsListView.as_view(), name='products_list'),
     path('panel/product/add/', views.AddProductView.as_view(), name='add_product'),
+    path('panel/product/remove/<slug:product_slug>/', views.RemoveProductView.as_view(), name='remove_product'),
 
 ]

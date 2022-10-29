@@ -18,7 +18,7 @@
                             <td>{{ product.slug }}</td>
                             <td><img src="{{ product.image.url }}" alt="" style="width: 100px;"></td>
                             <td>{{ product.price }}</td>
-                            <td><a href="#" class="btn btn-danger">Remove</a></td>
+                            <td><a href="{% url 'home:remove_product' product.slug %}" class="btn btn-danger">Remove</a></td>
                          </tr>
                  {% endfor %}
               </thead>

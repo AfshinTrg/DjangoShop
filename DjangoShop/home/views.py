@@ -87,6 +87,13 @@ class AddProductView(LoginRequiredMixin, AdminRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 
+class RemoveProductView(LoginRequiredMixin, AdminRequiredMixin, View):
+    def get(self, request, product_slug):
+        product = get_object_or_404(Product, slug=product_slug)
+        product.delete()
+        return redirect('home:products_list')
+
+
 
 
 
