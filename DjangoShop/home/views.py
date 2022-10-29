@@ -56,6 +56,13 @@ class AddCategoryView(LoginRequiredMixin, AdminRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 
+class RemoveCategoryView(LoginRequiredMixin, AdminRequiredMixin, View):
+    def get(self, request, category_slug):
+        category = get_object_or_404(Category, slug=category_slug)
+        category.delete()
+        return redirect('home:category_list')
+
+
 class ProductsListView(LoginRequiredMixin, AdminRequiredMixin, View):
     template_name = 'home/products_list.html'
 
@@ -78,4 +85,10 @@ class AddProductView(LoginRequiredMixin, AdminRequiredMixin, View):
             form.save()
             return redirect('home:products_list')
         return render(request, self.template_name, {'form': form})
+
+
+
+
+
+
 

@@ -20,7 +20,7 @@
             <td>{{ cat.name }}</td>
             <td>{{ cat.sub_category }}</td>
             <td>{{ cat.slug }}</td>
-            <td><a href="#" class="btn btn-danger">Remove</a></td>
+            <td><a href="{% url 'home:remove_category' cat.slug %}" class="btn btn-danger">Remove</a></td>
 
           </tr>
 
