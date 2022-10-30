@@ -23,3 +23,18 @@ class AddProductForm(forms.ModelForm):
     class Meta:
         model = Product
         exclude = ()
+
+
+class UpdateProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        exclude = ('category', 'image')
+
+
+
+
+
+
+
+
+

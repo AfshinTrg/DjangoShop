@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import Category, Product
-from .forms import AddToCartForm, AddCategoryForm, AddProductForm, UpdateCategoryForm
+from .forms import AddToCartForm, AddCategoryForm, AddProductForm, UpdateCategoryForm, UpdateProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from mixins import AdminRequiredMixin
 
@@ -115,7 +115,25 @@ class RemoveProductView(LoginRequiredMixin, AdminRequiredMixin, View):
         return redirect('home:products_list')
 
 
+class UpdateProductView(LoginRequiredMixin, AdminRequiredMixin, View):
+    template_name = 'home/update_category.html'
+    form_class = UpdateProductForm
 
+    def setup(self, request, *args, **kwargs):
+        self.product_instance = get_object_or_404(Product, pk=kwargs['product_id'])
+        return super().setup(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        product = self.product_instance
+        form = self.form_class(instance=product)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        product = self.product_instance
+        form = self.form_class(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+        return redirect('home:products_list')
 
 
 

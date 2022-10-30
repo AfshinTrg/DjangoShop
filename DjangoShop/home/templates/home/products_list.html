@@ -9,6 +9,7 @@
                     <th scope="col">Slug</th>
                     <th scope="col">Image</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Update</th>
                     <th scope="col">Remove</th>
                  </tr>
                  {% for product in products %}
@@ -18,6 +19,7 @@
                             <td>{{ product.slug }}</td>
                             <td><img src="{{ product.image.url }}" alt="" style="width: 100px;"></td>
                             <td>{{ product.price }}</td>
+                            <td><a href="{% url 'home:update_product' product.id %}" class="btn btn-info">Update</a></td>
                             <td><a href="{% url 'home:remove_product' product.slug %}" class="btn btn-danger">Remove</a></td>
                          </tr>
                  {% endfor %}
