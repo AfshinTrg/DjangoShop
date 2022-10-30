@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import Category, Product
+from orders.models import Order
 from .forms import AddToCartForm, AddCategoryForm, AddProductForm, UpdateCategoryForm, UpdateProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from mixins import AdminRequiredMixin
@@ -134,6 +135,18 @@ class UpdateProductView(LoginRequiredMixin, AdminRequiredMixin, View):
         if form.is_valid():
             form.save()
         return redirect('home:products_list')
+
+
+class OrdersListView(LoginRequiredMixin, View):
+    template_name = 'home/orders_list.html'
+
+    def get(self, request):
+        if request.user.is_superuser:
+            orders = Order.objects.all()
+        else:
+            orders = Order.objects.filter(user=request.user)
+        return render(request, self.template_name, {'orders': orders})
+
 
 
 

@@ -29,7 +29,7 @@
           {% if user.is_superuser %}
             <!-- Category Menu -->
             <li class="nav-item menu-open">
-              <a href="#" class="nav-link active">
+              <a href="http://127.0.0.1:8000/panel/" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Category
@@ -54,7 +54,7 @@
 
           <!-- Product Menu -->
             <li class="nav-item menu-open">
-              <a href="#" class="nav-link active">
+              <a href="http://127.0.0.1:8000/panel/" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Products
@@ -76,8 +76,29 @@
                 </li>
               </ul>
             </li>
+
+
+          {% endif %}
+          <!-- Order Menu -->
+            <li class="nav-item menu-open">
+              <a href="http://127.0.0.1:8000/panel/" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Orders
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'home:orders_list' %}" class="nav-link">
+                    <i class="fa fa-list nav-icon"></i>
+                    <p>Orders List</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Profile
@@ -85,8 +106,6 @@
               </p>
             </a>
           </li>
-
-          {% endif %}
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

@@ -19,5 +19,6 @@ urlpatterns += [
     path('panel/product/add/', views.AddProductView.as_view(), name='add_product'),
     path('panel/product/remove/<slug:product_slug>/', views.RemoveProductView.as_view(), name='remove_product'),
     path('panel/product/update/<int:product_id>/', views.UpdateProductView.as_view(), name='update_product'),
+    path('panel/orders/', views.OrdersListView.as_view(), name='orders_list'),
 
 ]
