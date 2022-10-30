@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import Category, Product
-from orders.models import Order
+from orders.models import Order, OrderItem
 from .forms import AddToCartForm, AddCategoryForm, AddProductForm, UpdateCategoryForm, UpdateProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from mixins import AdminRequiredMixin
@@ -146,6 +146,27 @@ class OrdersListView(LoginRequiredMixin, View):
         else:
             orders = Order.objects.filter(user=request.user)
         return render(request, self.template_name, {'orders': orders})
+
+
+class OrdersDetailView(LoginRequiredMixin, View):
+    template_name = 'home/order_detail.html'
+
+    def get(self, request, order_id):
+        if request.user.is_superuser:
+            order = get_object_or_404(Order, pk=order_id)
+        else:
+            order = get_object_or_404(Order, pk=order_id, user=request.user)
+        total_price = order.get_total_price()
+        order_item = OrderItem.objects.filter(order=order_id)
+        return render(request, self.template_name, {'order_item': order_item, 'total_price': total_price})
+
+
+
+
+
+
+
+
 
 
 

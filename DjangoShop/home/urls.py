@@ -20,5 +20,6 @@ urlpatterns += [
     path('panel/product/remove/<slug:product_slug>/', views.RemoveProductView.as_view(), name='remove_product'),
     path('panel/product/update/<int:product_id>/', views.UpdateProductView.as_view(), name='update_product'),
     path('panel/orders/', views.OrdersListView.as_view(), name='orders_list'),
+    path('panel/order/detail/<int:order_id>/', views.OrdersDetailView.as_view(), name='order_detail'),
 
 ]
