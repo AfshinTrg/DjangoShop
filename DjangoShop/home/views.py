@@ -37,7 +37,7 @@ class CategoriesListView(LoginRequiredMixin, AdminRequiredMixin, View):
     template_name = 'home/category_list.html'
 
     def get(self, request):
-        categories = Category.objects.all()
+        categories = Category.objects.filter(is_sub=False)
         return render(request, self.template_name, {'categories': categories})
 
 
